@@ -31,12 +31,33 @@ def display_tasks(manager):
 
 
 def complete_task(manager):
+    if not manager.get_tasks():
+        print("No tasks to complete.")
+        return
     display_tasks(manager)
-    task_id = int(input("Enter the id of the task to complete: "))
-    if manager.complete_task(task_id):
-        print("Task marked as completed.")
-    else:
-        print("Task not found.")
+    text = input("Enter the id(s) of the task(s) to complete, separated by commas (e.g. 1,3): ")
+
+    task_ids = []
+    for part in text.split(","):
+        part = part.strip()
+        if not part:
+            continue
+        if not part.isdigit():
+            print(f"Error: '{part}' is not a valid task id. Nothing was changed.")
+            return
+        task_ids.append(int(part))
+
+    if not task_ids:
+        print("Error: no task id entered.")
+        return
+
+    result = manager.complete_tasks(task_ids)
+    if result["completed"]:
+        print(f"Marked as completed: {result['completed']}")
+    if result["already_done"]:
+        print(f"Already completed: {result['already_done']}")
+    if result["not_found"]:
+        print(f"Not found: {result['not_found']}")
 
 
 def delete_task(manager):
