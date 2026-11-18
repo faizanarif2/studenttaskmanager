@@ -111,6 +111,12 @@ class TaskManager:
 
     def delete_task(self, task_id):
         """Remove a task. Return True if the task was found."""
+        # A valid identifier must be a positive whole number.
+        if isinstance(task_id, bool) or not isinstance(task_id, int):
+            raise ValueError("Task id must be a whole number.")
+        if task_id < 1:
+            raise ValueError("Task id must be a positive number.")
+
         task = self.find_task(task_id)
         if task is None:
             return False
