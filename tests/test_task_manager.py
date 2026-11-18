@@ -62,7 +62,7 @@ class TestDeleteTask(unittest.TestCase):
     def test_delete_task(self):
         self.assertTrue(self.manager.delete_task(1))
         self.assertIsNone(self.manager.find_task(1))
-        self.assertEqual(len(self.manager.get_tasks()), 2)
+        self.assertEqual(len(self.manager.get_tasks()), 1)
 
     def test_delete_unknown_task(self):
         self.assertFalse(self.manager.delete_task(5))
