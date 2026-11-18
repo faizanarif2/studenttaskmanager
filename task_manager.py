@@ -82,6 +82,27 @@ class TaskManager:
         self.save()
         return True
 
+    def complete_tasks(self, task_ids):
+        """Mark several selected tasks as completed.
+
+        Returns a dictionary with three lists of ids:
+        - "completed": tasks that were marked as completed now
+        - "already_done": tasks that were already completed
+        - "not_found": ids that do not match any task
+        """
+        result = {"completed": [], "already_done": [], "not_found": []}
+        for task_id in task_ids:
+            task = self.find_task(task_id)
+            if task is None:
+                result["not_found"].append(task_id)
+            elif task.completed:
+                result["already_done"].append(task_id)
+            else:
+                task.completed = True
+                result["completed"].append(task_id)
+        self.save()
+        return result
+
     def delete_task(self, task_id):
         """Remove a task. Return True if the task was found."""
         task = self.find_task(task_id)
