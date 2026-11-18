@@ -4,6 +4,8 @@ A Student Task Manager App made as a semester project.
 
 A simple Python console application that helps students keep track of their tasks.
 
+Project status: Planning
+
 ## Features
 
 - Add a task
