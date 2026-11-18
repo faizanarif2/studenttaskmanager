@@ -40,12 +40,33 @@ def complete_task(manager):
 
 
 def delete_task(manager):
+    if not manager.get_tasks():
+        print("No tasks to delete.")
+        return
     display_tasks(manager)
-    task_id = int(input("Enter the id of the task to delete: "))
-    if manager.delete_task(task_id):
-        print("Task deleted.")
-    else:
-        print("Task not found.")
+    text = input("Enter the id of the task to delete: ").strip()
+
+    if not text.isdigit():
+        print(f"Error: '{text}' is not a valid task id. Please enter a number.")
+        return
+    task_id = int(text)
+
+    task = manager.find_task(task_id)
+    if task is None:
+        print(f"Error: no task with id {task_id}.")
+        return
+
+    confirm = input(f"Delete {task}? (y/n): ").strip().lower()
+    if confirm != "y":
+        print("Delete cancelled.")
+        return
+
+    try:
+        manager.delete_task(task_id)
+    except ValueError as error:
+        print(f"Error: {error}")
+        return
+    print("Task deleted.")
 
 
 def main():
