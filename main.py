@@ -7,6 +7,8 @@ MENU = """
 ===== Student Task Manager =====
 1. Add task
 2. Display tasks
+3. Complete task
+4. Delete task
 0. Exit
 """
 
@@ -27,11 +29,31 @@ def display_tasks(manager):
         print(f"  {task}")
 
 
+def complete_task(manager):
+    display_tasks(manager)
+    task_id = int(input("Enter the id of the task to complete: "))
+    if manager.complete_task(task_id):
+        print("Task marked as completed.")
+    else:
+        print("Task not found.")
+
+
+def delete_task(manager):
+    display_tasks(manager)
+    task_id = int(input("Enter the id of the task to delete: "))
+    if manager.delete_task(task_id):
+        print("Task deleted.")
+    else:
+        print("Task not found.")
+
+
 def main():
     manager = TaskManager()
     actions = {
         "1": add_task,
         "2": display_tasks,
+        "3": complete_task,
+        "4": delete_task,
     }
 
     while True:
