@@ -2,6 +2,7 @@
 
 from task_manager import TaskManager
 
+DATA_FILE = "tasks.json"
 
 MENU = """
 ===== Student Task Manager =====
@@ -48,7 +49,7 @@ def delete_task(manager):
 
 
 def main():
-    manager = TaskManager()
+    manager = TaskManager(DATA_FILE)
     actions = {
         "1": add_task,
         "2": display_tasks,
