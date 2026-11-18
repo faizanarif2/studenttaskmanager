@@ -15,9 +15,19 @@ MENU = """
 
 
 def add_task(manager):
-    title = input("Enter task title: ")
-    task = manager.add_task(title)
-    print(f"Task added: {task}")
+    while True:
+        title = input("Enter task title: ")
+        try:
+            task = manager.add_task(title)
+        except ValueError as error:
+            print(f"Error: {error}")
+            retry = input("Try again? (y/n): ").strip().lower()
+            if retry != "y":
+                print("Add task cancelled.")
+                return
+            continue
+        print(f"Task added: {task}")
+        return
 
 
 def display_tasks(manager):

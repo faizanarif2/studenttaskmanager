@@ -55,7 +55,13 @@ class TaskManager:
             json.dump([task.to_dict() for task in self.tasks], f, indent=2)
 
     def add_task(self, title):
-        """Create a new task and return it."""
+        """Create a new task and return it.
+
+        Raises ValueError if the title is empty or only whitespace.
+        """
+        if title is None or not title.strip():
+            raise ValueError("Task title cannot be empty.")
+        title = title.strip()
         task = Task(self.next_id, title)
         self.tasks.append(task)
         self.next_id += 1
